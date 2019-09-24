@@ -101,8 +101,9 @@ class MySweetAlert2_Functions {
 
         foreach($this->jscripts as $jscript) {
             copy($jscript, str_replace('mysweetalert2_backup/', '', $jscript));
+            unlink($jscript);
         }
 
-        // TODO: Delete directory
+        rmdir('../jscripts/mysweetalert2_backup');
     }
 }
