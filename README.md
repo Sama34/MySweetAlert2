@@ -7,6 +7,8 @@ MySweetAlert2, a plugin for MyBB 1.8 - Replaces JQuery's jGrowl with SweetAlert2
 
 ![alt text](https://i.imgur.com/KURvZoF.png)
 
+MyBB mods download: https://community.mybb.com/mods.php?action=view&pid=1306
+
 ## Installation
 
 Upload all contents to your MyBB root and install the plugin in the admin control panel.
