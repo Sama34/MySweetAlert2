@@ -9,7 +9,7 @@
  * @author Skryptec <skryptec@gmail.com>
  */ 
 
-class Functions {
+class MySweetAlert2_Functions {
     /**
      * Stores matched Javascript files.
      * @var array
@@ -19,12 +19,14 @@ class Functions {
     /**
      * Get all Javascript files in the jscripts directory.
      * 
+     * @param string $type Just for backup references. 
+     * 
      * @author Skryptec <skryptec@gmail.com>
      */
-    public function getFiles() {
+    public function getFiles(string $type) {
         $matched = [];
 
-        foreach(glob('../../jscripts/*.js') as $jscript) {
+        foreach(glob('../jscripts/' . $type . '*.js') as $jscript) {
             (strpos(file_get_contents($jscript), '$.jGrowl(') !== false) ? array_push($matched, $jscript) : null;
         }
 
@@ -40,38 +42,38 @@ class Functions {
     /**
      * Replace all lines containing jGrowl with SweetAlert's code.
      * 
+     * @param string $fileName The name of the file.
+     * 
      * @author Skryptec <skryptec@gmail.com>
      */
-    public function replaceFilesWithSwal() {
-        foreach($this->jscripts as $jscript) {
-            file_put_contents($jscript, implode('', 
-                array_map(function($data) {
-                    $match = stristr($data, '$.jGrowl'); 
+    public function replaceFilesWithSwal(string $fileName) {
+        file_put_contents($fileName, implode('', 
+            array_map(function($data) {
+                $match = stristr($data, '$.jGrowl'); 
 
-                    if($match) {
-                        $filtered = explode(', ', trim(
-                                        str_replace(
-                                        [
-                                            "{theme:'jgrowl_", 
-                                            "'});", 
-                                            '$.jGrowl('
-                                        ], '', $match)
-                                    ));
-                        
-                        $title = ucfirst($filtered[1]) . '!';
+                if($match) {
+                    $filtered = explode(', ', trim(
+                                    str_replace(
+                                    [
+                                        "{theme:'jgrowl_", 
+                                        "'});", 
+                                        '$.jGrowl('
+                                    ], '', $match)
+                                ));
+                    
+                    $title = ucfirst($filtered[1]) . '!';
 
-                        $swal = <<<EOL
-                            /** MySweetAlert2 */
-                            Swal.fire('$title', $filtered[0], '$filtered[1]');\n
-                        EOL;
+                    $swal = <<<EOL
+                        /** MySweetAlert2 */
+                        Swal.fire('$title', $filtered[0], '$filtered[1]');\n
+                    EOL;
 
-                        return $swal;
-                    }
+                    return $swal;
+                }
 
-                    return $data;
-                }, file($jscript))
-            ));
-        }
+                return $data;
+            }, file($fileName))
+        ));
     }
 
     /**
@@ -80,14 +82,27 @@ class Functions {
      * @author Skryptec <skryptec@gmail.com>
      */
     public function createBackupForRevert() {
-        mkdir('../../jscripts/mysweetalert2_backup');
+        mkdir('../jscripts/mysweetalert2_backup');
 
         foreach($this->jscripts as $jscript) {
-            copy($jscript, substr_replace($jscript, 'mysweetalert2_backup/', 15, 0));
+            copy($jscript, substr_replace($jscript, 'mysweetalert2_backup/', 12, 0));
+
+            $this->replaceFilesWithSwal($jscript);
         }
     }
 
+    /**
+     * Revert MySweetAlert2 plugin to original state.
+     * 
+     * @author Skryptec <skryptec@gmail.com>
+     */
     public function revertSwal() {
+        $this->getFiles('mysweetalert2_backup/');
 
+        foreach($this->jscripts as $jscript) {
+            copy($jscript, str_replace('mysweetalert2_backup/', '', $jscript));
+        }
+
+        // TODO: Delete directory
     }
 }
