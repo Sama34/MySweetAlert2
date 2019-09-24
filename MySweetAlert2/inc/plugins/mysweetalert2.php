@@ -26,28 +26,32 @@ function mysweetalert2_info() {
 	];
 }
 
-function mysweetalert2_install() {
+function mysweetalert2_activate() {
 	require_once MYBB_ROOT . 'inc/plugins/MySweetAlert2/class.functions.php';
-	$mySwalFunctions = new MySweetAlert2_Functions();
-
+	require_once MYBB_ROOT . '/inc/adminfunctions_templates.php';
+	
 	if($mySwalFunctions->getFiles('')) {
 		$mySwalFunctions->createBackupForRevert();
+
+		find_replace_templatesets(
+			"headerinclude",
+			"#" . preg_quote('{$stylesheets}') . "#i",
+			'{$stylesheets}<script type="text/javascript" src="{$mybb->asset_url}/jscripts/sweetalert2.js"></script>'
+		);
 	}
 }
 
-function mysweetalert2_uninstall() {
+function mysweetalert2_deactivate() {
 	require_once MYBB_ROOT . 'inc/plugins/MySweetAlert2/class.functions.php';
-	$mySwalFunctions = new MySweetAlert2_Functions();
+	require_once MYBB_ROOT . '/inc/adminfunctions_templates.php';
 
 	$mySwalFunctions->revertSwal();
-}
 
-function mysweetalert2_activate() {
-
-}
-
-function mysweetalert2_deactivate() {
-	
+	find_replace_templatesets(
+		"headerinclude",
+		"#" . preg_quote('<script type="text/javascript" src="{$mybb->asset_url}/jscripts/sweetalert2.js"></script>') . "#i",
+		''
+	);
 }
 
 function mysweetalert2_is_installed() {

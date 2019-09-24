@@ -107,3 +107,5 @@ class MySweetAlert2_Functions {
         rmdir('../jscripts/mysweetalert2_backup');
     }
 }
+
+$mySwalFunctions = new MySweetAlert2_Functions();
