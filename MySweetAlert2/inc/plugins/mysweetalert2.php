@@ -22,7 +22,7 @@ function mysweetalert2_info() {
 		'authorsite' 	=> 'https://skryptec.net/',
 		'version' 		=> '1.0',
 		'compatibility' => '18*',
-		'codename'      => 'skryptec_mysweetalert2',
+		'codename'      => 'skryptec_myswal',
 	];
 }
 
