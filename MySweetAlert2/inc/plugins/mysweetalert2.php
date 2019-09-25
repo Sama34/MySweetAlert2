@@ -27,7 +27,7 @@ function mysweetalert2_info() {
 }
 
 function mysweetalert2_activate() {
-	require_once MYBB_ROOT . 'inc/plugins/MySweetAlert2/class.functions.php';
+	require_once MYBB_ROOT . '/inc/plugins/Skryptec/MySweetAlert2/class.functions.php';
 	require_once MYBB_ROOT . '/inc/adminfunctions_templates.php';
 	
 	if($mySwalFunctions->getFiles('')) {
@@ -42,7 +42,7 @@ function mysweetalert2_activate() {
 }
 
 function mysweetalert2_deactivate() {
-	require_once MYBB_ROOT . 'inc/plugins/MySweetAlert2/class.functions.php';
+	require_once MYBB_ROOT . '/inc/plugins/Skryptec/MySweetAlert2/class.functions.php';
 	require_once MYBB_ROOT . '/inc/adminfunctions_templates.php';
 
 	$mySwalFunctions->revertSwal();
