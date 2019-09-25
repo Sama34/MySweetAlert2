@@ -22,6 +22,7 @@ class MySweetAlert2_Functions {
      * @param string $type Just for backup references. 
      * 
      * @author Skryptec <skryptec@gmail.com>
+     * @return boolean
      */
     public function getFiles(string $type) {
         $matched = [];
