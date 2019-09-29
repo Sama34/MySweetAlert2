@@ -1,3 +1,5 @@
+![alt text](https://skryptec.net/assets/images/app/plugins/mysweetalert2.png)
+
 # MySweetAlert2
 
 MySweetAlert2, a plugin for MyBB 1.8 - Replaces JQuery's jGrowl with SweetAlert2.
