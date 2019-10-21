@@ -64,10 +64,7 @@ class MySweetAlert2_Functions {
                     
                     $title = ucfirst($filtered[1]) . '!';
 
-                    $swal = <<<EOL
-                        /** MySweetAlert2 */
-                        Swal.fire('$title', $filtered[0], '$filtered[1]');\n
-                    EOL;
+                    $swal = "/** MySweetAlert2 */\nSwal.fire('$title', $filtered[0], '$filtered[1]');\n";
 
                     return $swal;
                 }
